@@ -157,7 +157,9 @@ class Imap extends AbstractClient {
      * @return array
      */
     public function getMessageIds($criteria = 'ALL', $options = SE_UID, $charset = null) {
-        return imap_search($this->connection, $criteria, $options, $charset);
+        return (null !== $charset) ?
+            imap_search($this->connection, $criteria, $options, $charset) :
+            imap_search($this->connection, $criteria, $options);
     }
 
     /**
@@ -171,7 +173,9 @@ class Imap extends AbstractClient {
      * @return array
      */
     public function getMessageIdsBy($criteria = SORTDATE, $reverse = true, $options = SE_UID, $search = 'ALL', $charset = null) {
-        return imap_sort($this->connection, $criteria, (int)$reverse, $options, $search, $charset);
+        return (null !== $charset) ?
+            imap_sort($this->connection, $criteria, (int)$reverse, $options, $search, $charset) :
+            imap_sort($this->connection, $criteria, (int)$reverse, $options, $search);
     }
 
     /**
